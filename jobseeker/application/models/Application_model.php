@@ -14,7 +14,8 @@ class Application_model extends CI_Model
         parent::__construct();
     }
 
-    public function get_applications($limit, $start, $order_by, $order_dir, $search) {
+    public function get_applications($limit, $start, $order_by, $order_dir, $search)
+    {
         // default values if not set
         if (empty($limit)) {
             $limit = 10;
@@ -31,7 +32,7 @@ class Application_model extends CI_Model
         if (empty($order_dir)) {
             $order_dir = 'DESC';
         }
-        
+
         $this->db->select('a.*');
         $this->db->select('v.vacancy_name');
         $this->db->select('c.full_name as candidate_name');
@@ -46,13 +47,22 @@ class Application_model extends CI_Model
             $this->db->or_like('c.candidate_name', $search);
         }
 
-        $this->db->where('deleted_at', null);
+        $this->db->where('a.deleted_at', null);
         $this->db->order_by($order_by, $order_dir);
         $this->db->limit($limit, $start);
 
         $query = $this->db->get();
 
         return $query->result_array();
+    }
+
+    public function count_all_application()
+    {
+        $this->db->where('deleted_at', null);
+        $this->db->where('expired_date >=', date('Y-m-d'));
+        $this->db->count_all('t_vacancy');
+
+        return $this->db->count_all_results();
     }
 
     // create

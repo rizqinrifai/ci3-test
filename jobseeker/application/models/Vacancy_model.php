@@ -14,7 +14,8 @@ class Vacancy_model extends CI_Model
         parent::__construct();
     }
 
-    public function get_vacancy($limit, $start, $order_by, $order_dir, $search) {
+    public function get_vacancy($limit, $start, $order_by, $order_dir, $search)
+    {
         // default values if not set
         if (empty($limit)) {
             $limit = 10;
@@ -31,7 +32,7 @@ class Vacancy_model extends CI_Model
         if (empty($order_dir)) {
             $order_dir = 'DESC';
         }
-        
+
         $this->db->select('*');
         $this->db->from('t_vacancy');
 
@@ -42,7 +43,7 @@ class Vacancy_model extends CI_Model
         }
 
         $this->db->where('deleted_at', null);
-        $this->db->and_where('expired_date >=', date('Y-m-d'));
+        $this->db->where('expired_date >=', date('Y-m-d'));
         $this->db->order_by($order_by, $order_dir);
         $this->db->limit($limit, $start);
 
@@ -51,7 +52,8 @@ class Vacancy_model extends CI_Model
         return $query->result_array();
     }
 
-    public function count_all_vacancy() {
+    public function count_all_vacancy()
+    {
         $this->db->where('deleted_at', null);
         $this->db->where('expired_date >=', date('Y-m-d'));
         $this->db->count_all('t_vacancy');
@@ -64,6 +66,12 @@ class Vacancy_model extends CI_Model
     {
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row();
+    }
+
+    // create
+    public function create($data)
+    {
+        $this->db->insert($this->table, $data);
     }
 
     // upadate

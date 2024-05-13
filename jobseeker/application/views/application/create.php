@@ -10,33 +10,15 @@
                     <form id="createForm">
                         <div>
                             <label for="candidate_id">Candidate:</label>
-                            <input 
-                                type="number" 
-                                id="candidate_id" 
-                                name="candidate_id"
-                                data-parsley-required="true" 
-                                data-parsley-error-message="This field is required"
-                            >
+                            <input type="number" id="candidate_id" name="candidate_id" data-parsley-required="true" data-parsley-error-message="This field is required">
                         </div>
                         <div>
                             <label for="vacancy_id">Vacancy:</label>
-                            <input 
-                                type="number" 
-                                id="vacancy_id"
-                                name="vacancy_id"
-                                data-parsley-required="true" 
-                                data-parsley-error-message="This field is required"
-                            >
+                            <input type="number" id="vacancy_id" name="vacancy_id" data-parsley-required="true" data-parsley-error-message="This field is required">
                         </div>
                         <div>
                             <label for="application_date">Application Date:</label>
-                            <input 
-                                type="date"
-                                id="application_date"
-                                name="application_date"
-                                data-parsley-required="true" 
-                                data-parsley-error-message="This field is required"
-                            >
+                            <input type="date" id="application_date" name="application_date" data-parsley-required="true" data-parsley-error-message="This field is required">
                         </div>
                         <div>
                             <label for="application_status">Application Status:</label>
@@ -58,11 +40,11 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#createForm').submit(function(e){
+        $('#createForm').submit(function(e) {
             e.preventDefault();
-            var url = "<?php echo base_url(); ?>application/create/";
+            var url = "<?php echo base_url(); ?>apply/create/";
             var form = $('#createForm');
-            
+
             // validate form
             form.parsley().validate();
 
@@ -78,13 +60,13 @@
                 dataType: "JSON",
                 data: data,
                 success: function(data) {
-                    if (data.status) { 
+                    if (data.status) {
                         Swal.fire('Success', 'Data berhasil di tambah', 'success').then(
                             function() {
                                 location.reload();
                             }
-                        ); 
-                    } else { 
+                        );
+                    } else {
                         Swal.fire('Oops!', 'Data belum sesuai!', 'error').then(
                             function() {
                                 location.reload();
@@ -95,5 +77,4 @@
             });
         });
     });
-
 </script>

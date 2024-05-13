@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Application extends CI_Controller
+class Apply extends CI_Controller
 {
     public function __construct()
     {
@@ -19,14 +19,15 @@ class Application extends CI_Controller
         $this->template->load('template', 'application/list');
     }
 
-    public function datatable(){
+    public function datatable()
+    {
         $limit = $this->input->get('length');
         $start = $this->input->get('start');
         $order_by = $this->input->get('order')[0]['column'];
         $order_dir = $this->input->get('order')[0]['dir'];
         $search = $this->input->get('search')['value'];
 
-        $application = $this->application_model->get_application($limit, $start, $order_by, $order_dir, $search);
+        $application = $this->Application_model->get_applications($limit, $start, $order_by, $order_dir, $search);
         $total_application = $this->Application_model->count_all_application();
 
         $data = array(
@@ -48,10 +49,8 @@ class Application extends CI_Controller
         $data = array(
             'candidate_id' => $this->input->post('candidate_id'),
             'vacancy_id' => $this->input->post('vacancy_id'),
-            'application_name' => $this->input->post('application_name'),
-            'minimum_exp' => $this->input->post('minimum_exp'),
-            'created_date' => date('Y-m-d'),
-            'flag_status' => '1',
+            'application_date' => date('Y-m-d'),
+            'application_status' => '0',
         );
 
         $this->Application_model->create($data);
@@ -62,8 +61,7 @@ class Application extends CI_Controller
     public function delete($id)
     {
         $this->Application_model->delete($id);
-        
+
         echo json_encode(array("status" => TRUE));
     }
-
 }
